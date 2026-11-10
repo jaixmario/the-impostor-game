@@ -692,3 +692,136 @@
   font-weight: 700;
   color: #dc2626;
 }
+
+/* ==========================================================================
+   TOP PANEL & FULLSCREEN STYLES
+   - Exact circular styling matching Iu: h-16 w-16 rounded-full border border-gray-500
+   - Minimalist theme colors: #1f2937, #ffffff, #9ca3af, #374151
+   ========================================================================== */
+.top-panel-container {
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+  border-bottom: 1px solid #d1d5db;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.top-panel-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #6b7280;
+  color: #374151;
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.top-panel-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.top-panel-btn:active {
+  background-color: #e5e7eb;
+  transform: scale(0.96);
+}
+
+/* Fullscreen Modal Confirm Dialog */
+.top-panel-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.top-panel-modal-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 340px;
+  width: 100%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.top-panel-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+.top-panel-modal-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.top-panel-modal-btn-cancel {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid #9ca3af;
+  background-color: #ffffff;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease;
+}
+
+.top-panel-modal-btn-cancel:active {
+  background-color: #f3f4f6;
+}
+
+.top-panel-modal-btn-confirm {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1f2937;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease;
+}
+
+.top-panel-modal-btn-confirm:active {
+  background-color: #111827;
+}
+
+/* Fullscreen Mode adjustments */
+:fullscreen #app,
+:-webkit-full-screen #app {
+  height: 100vh;
+  max-height: 100vh;
+}

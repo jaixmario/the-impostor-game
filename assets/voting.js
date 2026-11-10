@@ -1278,3 +1278,257 @@ export function createVotingComponent(ho) {
     }
   };
 }
+
+// ==========================================================================
+// 4. TOP PANEL COMPONENT (Matching Iu + Fullscreen Toggle Button)
+// Exact circular theme: h-16 w-16 rounded-full border border-gray-500
+// Buttons: [Refresh] [Fullscreen Toggle] [Options (more_vert)]
+// ==========================================================================
+export function createTopPanelComponent(ho) {
+  const h = makeH(ho);
+
+  return {
+    name: 'TopPanel',
+    props: ['phase'],
+    data() {
+      return {
+        isFullscreen: false,
+        showRestartConfirm: false
+      };
+    },
+
+    mounted() {
+      const checkFs = () => {
+        this.isFullscreen = !!(
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement
+        );
+      };
+      this._checkFs = checkFs;
+      document.addEventListener('fullscreenchange', checkFs);
+      document.addEventListener('webkitfullscreenchange', checkFs);
+      document.addEventListener('mozfullscreenchange', checkFs);
+      document.addEventListener('MSFullscreenChange', checkFs);
+      checkFs();
+    },
+
+    beforeUnmount() {
+      if (this._checkFs) {
+        document.removeEventListener('fullscreenchange', this._checkFs);
+        document.removeEventListener('webkitfullscreenchange', this._checkFs);
+        document.removeEventListener('mozfullscreenchange', this._checkFs);
+        document.removeEventListener('MSFullscreenChange', this._checkFs);
+      }
+    },
+
+    methods: {
+      toggleFullscreen() {
+        const isFull = !!(
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement
+        );
+        if (!isFull) {
+          const docEl = document.documentElement;
+          if (docEl.requestFullscreen) {
+            docEl.requestFullscreen().catch(() => {});
+          } else if (docEl.webkitRequestFullscreen) {
+            docEl.webkitRequestFullscreen();
+          } else if (docEl.mozRequestFullScreen) {
+            docEl.mozRequestFullScreen();
+          } else if (docEl.msRequestFullscreen) {
+            docEl.msRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        }
+      },
+
+      onRestart() {
+        this.showRestartConfirm = true;
+      },
+
+      confirmRestart() {
+        this.showRestartConfirm = false;
+        this.dispatchGameEvent('restartGame');
+      },
+
+      cancelRestart() {
+        this.showRestartConfirm = false;
+      },
+
+      onOptions() {
+        this.dispatchGameEvent('showOptionsDialog');
+      },
+
+      dispatchGameEvent(id, data = {}) {
+        const el = this.$el || document.getElementById('app') || document.documentElement;
+        el.dispatchEvent(
+          new CustomEvent('__93.custom', {
+            detail: {
+              event: {
+                id,
+                data
+              }
+            },
+            bubbles: true
+          })
+        );
+      }
+    },
+
+    render() {
+      const self = this;
+
+      return h(
+        'div',
+        {
+          class:
+            'w-full py-4 flex flex-row gap-x-4 border-b border-gray-300 bg-white text-lg items-center justify-center top-panel-container'
+        },
+        [
+          // Button 1: Restart (refresh icon)
+          h(
+            'button',
+            {
+              type: 'button',
+              class:
+                'h-16 w-16 rounded-full flex items-center justify-center border border-gray-500 text-gray-700 bg-white active:bg-gray-200 cursor-pointer top-panel-btn',
+              title: 'Restart game',
+              onClick: () => self.onRestart()
+            },
+            [
+              h(
+                'span',
+                {
+                  class: 'material-symbols-outlined',
+                  style: {
+                    fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24",
+                    fontSize: '28px',
+                    lineHeight: '1'
+                  }
+                },
+                'refresh'
+              )
+            ]
+          ),
+
+          // Button 2: Fullscreen Toggle (Material Symbols fullscreen / fullscreen_exit)
+          h(
+            'button',
+            {
+              type: 'button',
+              class:
+                'h-16 w-16 rounded-full flex items-center justify-center border border-gray-500 text-gray-700 bg-white active:bg-gray-200 cursor-pointer top-panel-btn',
+              title: self.isFullscreen ? 'Exit full screen' : 'Enter full screen',
+              onClick: () => self.toggleFullscreen()
+            },
+            [
+              self.isFullscreen
+                ? h(
+                    'svg',
+                    {
+                      viewBox: '0 0 24 24',
+                      width: '28',
+                      height: '28',
+                      fill: 'currentColor',
+                      style: { display: 'block' }
+                    },
+                    [
+                      h('path', {
+                        d: 'M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z'
+                      })
+                    ]
+                  )
+                : h(
+                    'svg',
+                    {
+                      viewBox: '0 0 24 24',
+                      width: '28',
+                      height: '28',
+                      fill: 'currentColor',
+                      style: { display: 'block' }
+                    },
+                    [
+                      h('path', {
+                        d: 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z'
+                      })
+                    ]
+                  )
+            ]
+          ),
+
+          // Button 3: Options (more_vert icon)
+          h(
+            'button',
+            {
+              type: 'button',
+              class:
+                'h-16 w-16 rounded-full flex items-center justify-center border border-gray-500 text-gray-700 bg-white active:bg-gray-200 cursor-pointer top-panel-btn',
+              title: 'Options',
+              onClick: () => self.onOptions()
+            },
+            [
+              h(
+                'span',
+                {
+                  class: 'material-symbols-outlined',
+                  style: {
+                    fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24",
+                    fontSize: '28px',
+                    lineHeight: '1'
+                  }
+                },
+                'more_vert'
+              )
+            ]
+          ),
+
+          // Optional Restart Confirmation Modal Dialog (100% theme matched)
+          self.showRestartConfirm
+            ? h('div', { class: 'top-panel-modal-overlay' }, [
+                h('div', { class: 'top-panel-modal-card' }, [
+                  h(
+                    'div',
+                    { class: 'top-panel-modal-title' },
+                    'Are you sure you want to restart the game?'
+                  ),
+                  h('div', { class: 'top-panel-modal-actions' }, [
+                    h(
+                      'button',
+                      {
+                        type: 'button',
+                        class: 'top-panel-modal-btn-cancel',
+                        onClick: () => self.cancelRestart()
+                      },
+                      'No'
+                    ),
+                    h(
+                      'button',
+                      {
+                        type: 'button',
+                        class: 'top-panel-modal-btn-confirm',
+                        onClick: () => self.confirmRestart()
+                      },
+                      'Yes'
+                    )
+                  ])
+                ])
+              ])
+            : null
+        ]
+      );
+    }
+  };
+}
