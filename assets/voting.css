@@ -1,0 +1,694 @@
+/* ==========================================================================
+   The Impostor - 100% Theme-Matched Minimalist Stylesheet
+   - Exact Palette: #1f2937 (Dark Charcoal), #ffffff (White), #9ca3af (Border Gray)
+   - Accent & Role Colors: #16a34a (Civilian Green), #dc2626 (Impostor Red)
+   - Zero timers, zero superfluous icons, zero rainbow colors
+   - Exact spacing & sizing matching original app layout
+   ========================================================================== */
+
+/* Container */
+.voting-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  color: #1f2937;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   1. SETUP / PLAYER NAMES SCREEN (Matching Mu & Gu exactly)
+   ========================================================================== */
+.setup-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 32px 24px 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.setup-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  padding-top: 16px;
+  padding-bottom: 4px;
+}
+
+/* Player Name Inputs (Exact match to original playerNameInput Mu) */
+.player-inputs-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.player-input-wrapper {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.player-name-input {
+  width: 100%;
+  height: 48px;
+  padding: 8px 16px;
+  font-size: 20px;
+  line-height: 28px;
+  color: #1f2937;
+  background-color: transparent;
+  border: 2px solid #9ca3af;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s ease;
+  font-family: inherit;
+}
+
+.player-name-input:focus {
+  border-color: #1f2937;
+}
+
+/* Voting Mode Section */
+.voting-mode-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.voting-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.voting-section-subtitle {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.voting-segmented-control {
+  display: flex;
+  width: 100%;
+  border: 2px solid #9ca3af;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.voting-segmented-btn {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #1f2937;
+  transition: all 0.15s ease;
+  user-select: none;
+  font-family: inherit;
+}
+
+.voting-segmented-btn:not(:last-child) {
+  border-right: 2px solid #9ca3af;
+}
+
+.voting-segmented-btn.active {
+  background-color: #1f2937;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Word Re-view Checkbox */
+.word-review-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.word-review-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #9ca3af;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+.word-review-checkbox.checked {
+  background-color: #1f2937;
+  border-color: #1f2937;
+  color: #ffffff;
+}
+
+.word-review-label-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.word-review-label-desc {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+/* Setup Start Button (Exact match to original Gu: 80px, #1f2937, rounded 8px) */
+.setup-start-wrapper {
+  padding: 32px;
+  background-color: #ffffff;
+  border-top: 1px solid #f3f4f6;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.setup-start-btn {
+  width: 100%;
+  height: 80px;
+  background-color: #1f2937;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  font-family: inherit;
+}
+
+.setup-start-btn:active {
+  background-color: #374151;
+}
+
+/* ==========================================================================
+   2. CHECK WORDS SCREEN (Matching Lu & user screenshot)
+   ========================================================================== */
+.checkwords-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.checkwords-content {
+  flex: 1;
+  padding: 24px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checkwords-prompt {
+  font-size: 18px;
+  color: #4b5563;
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 12px;
+  line-height: 1.4;
+}
+
+.checkwords-setter-badge {
+  margin-bottom: 16px;
+  padding: 6px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.checkwords-list {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkwords-player-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: none;
+  transition: background-color 0.15s ease;
+}
+
+.checkwords-player-btn:active:not(.locked) {
+  background-color: #f3f4f6;
+  border-radius: 6px;
+}
+
+.checkwords-player-btn.locked {
+  cursor: default;
+}
+
+.checkwords-player-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.checkwords-player-name {
+  font-size: 24px;
+  color: #111827;
+  font-weight: 500;
+  text-align: center;
+}
+
+.checkwords-player-name.seen {
+  color: #9ca3af;
+}
+
+.checkwords-check-icon {
+  color: #16a34a;
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.checkwords-divider {
+  width: 50%;
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 0 auto;
+}
+
+/* Bottom Control Button: Strictly disabled until all words are viewed */
+.checkwords-bottom-bar {
+  padding: 24px 32px 32px 32px;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.checkwords-action-btn {
+  width: 100%;
+  height: 72px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 9999px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.checkwords-action-btn.disabled {
+  background-color: #9ca3af;
+  color: #ffffff;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.checkwords-action-btn.enabled {
+  background-color: #1f2937;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.checkwords-action-btn.enabled:active {
+  background-color: #374151;
+}
+
+/* Secret Word Modal Dialog (Exact match to app's Uu wordDialog) */
+.checkwords-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.checkwords-modal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 360px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+.checkwords-modal-player {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+}
+
+.checkwords-modal-sub {
+  font-size: 15px;
+  color: #6b7280;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.checkwords-modal-word {
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 24px;
+  padding: 16px;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: #1e3a8a;
+  background-color: #93c5fd;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  box-sizing: border-box;
+}
+
+/* Red styling when player is The Impostor! */
+.checkwords-modal-word.impostor {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 2px solid #ef4444;
+}
+
+.checkwords-modal-btn-wrap {
+  width: 100%;
+}
+
+.checkwords-modal-ok-btn {
+  width: 100%;
+  height: 60px;
+  border-radius: 9999px;
+  background-color: #1f2937;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  font-family: inherit;
+}
+
+.checkwords-modal-ok-btn:active {
+  background-color: #374151;
+}
+
+/* ==========================================================================
+   3. DISCUSSION & VOTING SCREEN (No timer, Minimalist, Theme Matched)
+   ========================================================================== */
+.voting-header {
+  padding: 14px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.voting-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.voting-mode-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid #9ca3af;
+  color: #1f2937;
+  background: #f9fafb;
+}
+
+.voting-main-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Discussion Prompt */
+.discussion-prompt-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.discussion-prompt-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.discussion-prompt-desc {
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+/* Player Cards in Discussion */
+.player-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.player-card {
+  padding: 12px 16px;
+  border: 2px solid #9ca3af;
+  border-radius: 4px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s ease;
+}
+
+.player-card.eliminated {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  opacity: 0.6;
+}
+
+.player-card-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.player-card-name.eliminated {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+/* Action Button at bottom of discussion */
+.voting-bottom-actions {
+  padding: 20px 24px 28px 24px;
+  background: #ffffff;
+  border-top: 1px solid #f3f4f6;
+}
+
+.btn-primary-action {
+  width: 100%;
+  height: 64px;
+  background-color: #1f2937;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  font-family: inherit;
+}
+
+.btn-primary-action:active {
+  background-color: #374151;
+}
+
+/* Secret Ballot Handover Card */
+.handover-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 16px;
+  background: #f9fafb;
+  border: 2px solid #9ca3af;
+  border-radius: 8px;
+  margin: auto 0;
+}
+
+.handover-player-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.handover-instruction {
+  font-size: 15px;
+  color: #4b5563;
+  margin-bottom: 24px;
+  max-width: 280px;
+  line-height: 1.4;
+}
+
+/* Ballot Selection Cards */
+.ballot-option-card {
+  padding: 14px 16px;
+  border: 2px solid #9ca3af;
+  border-radius: 4px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-bottom: 10px;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.ballot-option-card.selected {
+  border-color: #1f2937;
+  background-color: #f3f4f6;
+}
+
+.ballot-radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #9ca3af;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ballot-radio.selected {
+  border-color: #1f2937;
+  background-color: #1f2937;
+}
+
+.ballot-radio.selected::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* Open Tell Tally Controls */
+.tally-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tally-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #9ca3af;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #1f2937;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.tally-btn:active {
+  background-color: #1f2937;
+  color: #ffffff;
+}
+
+.tally-count {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Results & Ceremony */
+.ceremony-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  background: #f9fafb;
+  border: 2px solid #9ca3af;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.role-tag-civilian {
+  font-size: 18px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.role-tag-impostor {
+  font-size: 18px;
+  font-weight: 700;
+  color: #dc2626;
+}
