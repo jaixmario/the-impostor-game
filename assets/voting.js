@@ -12,7 +12,7 @@
 // ==========================================================================
 
 let memoryMode = 'hidden';
-let memoryReview = false; // Default: false (locked - do not re-show word once viewed)
+let memoryReview = true; // Default: true (checked - allows review with popup; uncheck to lock completely)
 
 export function getSavedVotingMode() {
   try {
@@ -271,8 +271,21 @@ export function createCheckWordsComponent(ho) {
       return {
         hasSeen: players.map(() => false),
         modalPlayer: null,
+        confirmReviewPlayer: null,
         allowWordReview: getSavedWordReview()
       };
+    },
+
+    watch: {
+      activePlayers: {
+        immediate: true,
+        handler(newPlayers) {
+          const len = (newPlayers && newPlayers.length) || 0;
+          if (this.hasSeen.length !== len) {
+            this.hasSeen = new Array(len).fill(false);
+          }
+        }
+      }
     },
 
     computed: {
@@ -288,19 +301,45 @@ export function createCheckWordsComponent(ho) {
     },
 
     methods: {
-      openWord(idx) {
-        // Fix 1: If player has already viewed word and re-viewing is not allowed, DO NOT re-show!
-        if (this.hasSeen[idx] && !this.allowWordReview) {
-          return;
-        }
+      onPlayerClick(idx) {
+        if (this.hasSeen[idx]) {
+          // If tick is unchecked on setup screen: don't show popup, don't allow review!
+          if (!this.allowWordReview) {
+            return;
+          }
 
+          // If allowed: Show confirmation popup BEFORE viewing word again!
+          const players = this.activePlayers || [];
+          const p = players[idx] || { name: `Player ${idx + 1}` };
+          this.confirmReviewPlayer = {
+            idx,
+            name: p.name
+          };
+        } else {
+          // First time viewing: Open word directly
+          this.showWordForPlayer(idx);
+        }
+      },
+
+      confirmReview() {
+        if (!this.confirmReviewPlayer) return;
+        const idx = this.confirmReviewPlayer.idx;
+        this.confirmReviewPlayer = null;
+        this.showWordForPlayer(idx);
+      },
+
+      cancelReview() {
+        this.confirmReviewPlayer = null;
+      },
+
+      showWordForPlayer(idx) {
         const players = this.activePlayers || [];
         const p = players[idx] || { name: `Player ${idx + 1}` };
         const role = (this.roles && this.roles[idx]) || null;
         let word = null;
         let isImpostor = false;
 
-        // Fix 2: Explicitly handle Impostor (mrWhite) -> The Impostor gets NO word!
+        // Impostor (mrWhite) -> The Impostor gets NO word!
         if (role === 'mrWhite') {
           isImpostor = true;
           word = null;
@@ -328,7 +367,7 @@ export function createCheckWordsComponent(ho) {
       },
 
       goToDiscussion() {
-        // Fix 3: Strict check — do not start before view all words
+        // Strict check — do not start before view all words
         if (!this.allSeen) return;
 
         const el = this.$el || document.getElementById('app') || document.documentElement;
@@ -375,14 +414,13 @@ export function createCheckWordsComponent(ho) {
             { class: 'checkwords-list' },
             players.map((p, idx) => {
               const seen = self.hasSeen[idx];
-              const isLocked = seen && !self.allowWordReview;
 
               return h(
                 'button',
                 {
                   key: idx,
-                  class: `checkwords-player-btn ${seen ? 'seen' : ''} ${isLocked ? 'locked' : ''}`,
-                  onClick: () => self.openWord(idx)
+                  class: `checkwords-player-btn ${seen ? 'seen' : ''} ${seen && !self.allowWordReview ? 'locked' : ''}`,
+                  onClick: () => self.onPlayerClick(idx)
                 },
                 [
                   h('div', { class: 'checkwords-player-row' }, [
@@ -393,9 +431,23 @@ export function createCheckWordsComponent(ho) {
                       },
                       p.name
                     ),
-                    // Fix 4: ALWAYS show green tick (✓) as soon as player views their word!
+                    // Checkmark tick: Circled checkmark SVG matching original Lu
                     seen
-                      ? h('span', { class: 'checkwords-check-icon' }, '✓')
+                      ? h(
+                          'svg',
+                          {
+                            class: 'checkwords-check-svg',
+                            viewBox: '0 0 20 20',
+                            fill: 'currentColor'
+                          },
+                          [
+                            h('path', {
+                              'fill-rule': 'evenodd',
+                              'clip-rule': 'evenodd',
+                              d: 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z'
+                            })
+                          ]
+                        )
                       : null
                   ]),
                   h('div', { class: 'checkwords-divider' })
@@ -405,8 +457,7 @@ export function createCheckWordsComponent(ho) {
           )
         ]),
 
-        // Bottom Button to control this screen review:
-        // STRICTLY DISABLED until every player has viewed their word!
+        // Bottom Button: Strictly disabled until all words are viewed
         h('div', { class: 'checkwords-bottom-bar' }, [
           h(
             'button',
@@ -421,7 +472,40 @@ export function createCheckWordsComponent(ho) {
           )
         ]),
 
-        // Secret Word Modal Dialog (Matching Uu in original app)
+        // 1. Confirmation Popup BEFORE viewing word again (Matching original Lu)
+        self.confirmReviewPlayer
+          ? h('div', { class: 'checkwords-modal-overlay' }, [
+              h('div', { class: 'checkwords-confirm-card' }, [
+                h(
+                  'div',
+                  { class: 'checkwords-confirm-title' },
+                  `${self.confirmReviewPlayer.name} has already seen their word. Want to see again?`
+                ),
+                h('div', { class: 'checkwords-confirm-actions' }, [
+                  h(
+                    'button',
+                    {
+                      type: 'button',
+                      class: 'checkwords-confirm-btn-no',
+                      onClick: () => self.cancelReview()
+                    },
+                    'No'
+                  ),
+                  h(
+                    'button',
+                    {
+                      type: 'button',
+                      class: 'checkwords-confirm-btn-yes',
+                      onClick: () => self.confirmReview()
+                    },
+                    'Yes'
+                  )
+                ])
+              ])
+            ])
+          : null,
+
+        // 2. Secret Word Modal Dialog (Matching Uu in original app)
         self.modalPlayer
           ? h('div', { class: 'checkwords-modal-overlay' }, [
               h('div', { class: 'checkwords-modal-card' }, [

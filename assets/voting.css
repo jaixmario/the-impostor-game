@@ -295,10 +295,83 @@
   color: #9ca3af;
 }
 
+.checkwords-check-svg {
+  width: 24px;
+  height: 24px;
+  color: #9ca3af; /* Exact grey matching real screenshot and text-gray-400 */
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 .checkwords-check-icon {
-  color: #16a34a;
+  color: #9ca3af; /* Exact grey matching real screenshot */
   font-weight: 800;
   font-size: 22px;
+}
+
+/* Confirmation Popup before viewing word again */
+.checkwords-confirm-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.checkwords-confirm-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.4;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.checkwords-confirm-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkwords-confirm-btn-no {
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #4b5563;
+  font-size: 18px;
+  font-weight: 600;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease;
+}
+
+.checkwords-confirm-btn-no:active {
+  background-color: #f3f4f6;
+}
+
+.checkwords-confirm-btn-yes {
+  padding: 10px 24px;
+  border-radius: 6px;
+  background-color: #1f2937;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease;
+}
+
+.checkwords-confirm-btn-yes:active {
+  background-color: #111827;
 }
 
 .checkwords-divider {
